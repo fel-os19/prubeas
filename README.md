@@ -104,12 +104,6 @@ También se incluye una versión gráfica experimental como complemento. Esta ve
 Para compilarla en Windows con MinGW:
 
 ```cmd
-gcc versiongrafica.c -o versiongrafica.exe -lgdi32 -luser32 -lm
-```
-
-o:
-
-```cmd
 gcc versiongrafica2.c -o versiongrafica2.exe -lgdi32 -luser32 -lm
 ```
 
