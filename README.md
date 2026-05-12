@@ -10,10 +10,6 @@ El programa permite modelar un mapa turístico a partir de calles definidas por 
 - Ariel Fernández Fuentealba
 - Felipe Grandón Contreras
 
-## Repositorio
-
-https://github.com/fel-os19/md
-
 ## Archivos principales
 
 ```text
