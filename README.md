@@ -1,8 +1,15 @@
-# Mapa Turístico con Teoría de Grafos
+# Proyecto Semestral: Mapa Turístico y Rutas con Teoría de Grafos
 
-Proyecto desarrollado en lenguaje C para la asignatura **Matemáticas Discretas** de la carrera **Ingeniería Civil Informática** de la Universidad de Concepción.
+**Universidad de Concepción**  
+**Carrera:** Ingeniería Civil Informática  
+**Asignatura:** Matemáticas Discretas  
+**Profesora:** Lilian Angélica Salinas Ayala  
 
-El programa permite modelar un mapa turístico a partir de calles definidas por coordenadas y puntos de interés ubicados sobre ellas. Con esta información, construye un grafo ponderado y utiliza el algoritmo de Dijkstra para calcular rutas entre los puntos turísticos.
+## Descripción
+
+Este programa en C modela el mapa turístico de una ciudad mediante grafos. A partir de un archivo de texto con calles representadas como segmentos de recta en un plano 2D y una lista de puntos turísticos, el programa construye un grafo ponderado y utiliza el algoritmo de Dijkstra para calcular rutas entre los puntos de interés.
+
+La versión oficial corresponde al archivo `mapa.c`, ejecutado por consola. Además, se incluyen archivos de entrada de referencia y una versión gráfica experimental como complemento del proyecto.
 
 ## Integrantes
 
@@ -10,36 +17,21 @@ El programa permite modelar un mapa turístico a partir de calles definidas por 
 - Ariel Fernández Fuentealba
 - Felipe Grandón Contreras
 
-## Archivos principales
+## Requisitos de compilación
 
-```text
-mapa.c
-input.txt
-input2.txt
-input3.txt
-InformeDiscreta.pdf
-README.md
-```
+El programa está escrito en C y está diseñado para compilarse en entornos Linux utilizando `gcc`.
 
-Además, se incluye una carpeta con una versión gráfica experimental desarrollada como complemento del proyecto.
-
-## Requisitos
-
-Para compilar la versión oficial se requiere:
-
-- Sistema operativo Linux o entorno compatible.
-- Compilador `gcc`.
-- Librería matemática estándar de C.
+Como utiliza funciones de la librería matemática estándar (`math.h`), se debe enlazar dicha librería con la bandera `-lm`.
 
 ## Compilación
 
-Desde la carpeta donde se encuentra `mapa.c`, ejecutar:
+Abrir una terminal en el directorio donde se encuentra el archivo `mapa.c` y ejecutar:
 
 ```bash
 gcc mapa.c -o mapa -lm
 ```
 
-También puede compilarse mostrando advertencias:
+También puede compilarse mostrando advertencias con:
 
 ```bash
 gcc -Wall -Wextra -std=c11 mapa.c -o mapa -lm
@@ -47,28 +39,23 @@ gcc -Wall -Wextra -std=c11 mapa.c -o mapa -lm
 
 ## Ejecución
 
-Después de compilar, ejecutar:
+Luego de compilar, ejecutar:
 
 ```bash
 ./mapa
 ```
 
-El programa solicitará el nombre del archivo de entrada. Por ejemplo:
+El programa solicitará el nombre del archivo de entrada. Se pueden usar los archivos de prueba incluidos:
 
 ```text
 input.txt
-```
-
-También pueden usarse los otros archivos de prueba incluidos:
-
-```text
 input2.txt
 input3.txt
 ```
 
-## Formato general del archivo de entrada
+## Formato del archivo de entrada
 
-El archivo debe indicar primero las calles y luego los puntos turísticos:
+El archivo debe tener primero la cantidad de calles, luego los datos de cada calle, después la cantidad de puntos turísticos y finalmente los datos de cada punto.
 
 ```text
 N
@@ -79,8 +66,13 @@ Nombre_punto Nombre_calle posicion
 ...
 ```
 
-Donde `N` corresponde a la cantidad de calles y `M` a la cantidad de puntos turísticos.  
-El eje puede ser `X` o `Y`, según cómo se ubica el punto turístico sobre la calle.
+Donde:
+
+- `N` es la cantidad de calles.
+- `x1 y1 x2 y2` son las coordenadas iniciales y finales de cada calle.
+- `Eje` puede ser `X` o `Y`.
+- `M` es la cantidad de puntos turísticos.
+- `posicion` indica la ubicación del punto turístico sobre la calle correspondiente.
 
 ## Ejemplo de entrada
 
@@ -95,25 +87,28 @@ Museo Los_Carrera 300
 Plaza Freire 900
 ```
 
-## Versión gráfica experimental
+## Estructura del proyecto
 
-La versión oficial del proyecto es `mapa.c`, ejecutada por consola.
-
-También se incluye una versión gráfica experimental como complemento. Esta versión utiliza dependencias de Windows, por lo que no está pensada para compilarse directamente en Linux.
-
-Para compilarla en Windows con MinGW:
-
-```cmd
-gcc versiongrafica2.c -o versiongrafica2.exe -lgdi32 -luser32 -lm
+```text
+.
+├── mapa.c
+├── input.txt
+├── input2.txt
+├── input3.txt
+├── InformeDiscreta.pdf
+├── README.md
+└── version_grafica/
+    ├── versiongrafica.c
+    ├── versiongrafica2.c
+    └── README.md
 ```
+
+La carpeta `version_grafica/` contiene una versión experimental del programa. Sus instrucciones de compilación y ejecución se encuentran en el README incluido dentro de esa misma carpeta.
 
 ## Consideraciones
 
 - Los nombres de calles y puntos turísticos no deben contener espacios.
 - Cada punto turístico debe estar asociado a una calle existente.
-- La versión oficial calcula rutas mediante Dijkstra.
-- El informe contiene la explicación completa del modelo, la implementación y las conclusiones.
-
-## Profesora
-
-Lilian Angélica Salinas Ayala
+- La versión oficial se ejecuta por consola.
+- La versión gráfica es complementaria y no corresponde al entregable principal.
+- El detalle del modelo, la implementación y las conclusiones se encuentra en el informe.
