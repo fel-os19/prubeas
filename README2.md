@@ -1,4 +1,4 @@
-# README - Versión gráfica experimental
+# Versión gráfica exploratoria
 
 Esta carpeta contiene una versión gráfica experimental del programa, desarrollada como complemento de la versión oficial por consola (`mapa.c`).
 
