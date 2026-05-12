@@ -1,242 +1,90 @@
-# Mapa Turístico y Rutas con Teoría de Grafos
+# Mapa Turístico con Teoría de Grafos
 
-Proyecto semestral desarrollado en lenguaje C para la asignatura **Matemáticas Discretas** de la carrera **Ingeniería Civil Informática** de la Universidad de Concepción.
+Proyecto desarrollado en lenguaje C para la asignatura **Matemáticas Discretas** de la carrera **Ingeniería Civil Informática** de la Universidad de Concepción.
 
-El programa modela un mapa turístico a partir de calles definidas por coordenadas y puntos de interés ubicados sobre ellas. Luego transforma esa información en un **grafo ponderado no dirigido** y utiliza el algoritmo de **Dijkstra** para calcular rutas entre los puntos turísticos.
+El programa permite modelar un mapa turístico a partir de calles definidas por coordenadas y puntos de interés ubicados sobre ellas. Con esta información, construye un grafo ponderado y utiliza el algoritmo de Dijkstra para calcular rutas entre los puntos turísticos.
 
----
+## Integrantes
 
-## Tabla de contenidos
+- Rodrigo Domínguez Larenas
+- Ariel Fernández Fuentealba
+- Felipe Grandón Contreras
 
-- [Descripción general](#descripción-general)
-- [Modelo del problema](#modelo-del-problema)
-- [Funcionamiento del programa](#funcionamiento-del-programa)
-- [Estructura del proyecto](#estructura-del-proyecto)
-- [Requisitos](#requisitos)
-- [Compilación](#compilación)
-- [Ejecución](#ejecución)
-- [Formato del archivo de entrada](#formato-del-archivo-de-entrada)
-- [Ejemplo de entrada](#ejemplo-de-entrada)
-- [Principales funciones](#principales-funciones)
-- [Versión gráfica experimental](#versión-gráfica-experimental)
-- [Limitaciones](#limitaciones)
-- [Posibles mejoras](#posibles-mejoras)
-- [Repositorio](#repositorio)
-- [Autores](#autores)
+## Repositorio
 
----
+https://github.com/fel-os19/md
 
-## Descripción general
-
-Este proyecto permite representar el mapa turístico de una ciudad mediante teoría de grafos. El programa recibe como entrada un archivo de texto que contiene calles, coordenadas y puntos turísticos. A partir de esa información, construye un grafo que permite calcular rutas entre distintos lugares de interés.
-
-En el modelo utilizado:
-
-- Los **vértices** representan extremos de calles, intersecciones y puntos turísticos.
-- Las **aristas** representan tramos transitables entre vértices consecutivos.
-- Los **pesos** representan la distancia geométrica entre dos vértices conectados.
-
-La versión principal del programa funciona por consola y está orientada a cumplir con el objetivo central del proyecto: transformar un mapa descrito por coordenadas en un grafo ponderado y aplicar Dijkstra para calcular rutas.
-
----
-
-## Modelo del problema
-
-El programa transforma un problema geométrico en un problema de grafos.
+## Archivos principales
 
 ```text
-Archivo de entrada
-        ↓
-Lectura de calles y puntos turísticos
-        ↓
-Representación de calles como segmentos en el plano cartesiano
-        ↓
-Detección de extremos, intersecciones y puntos turísticos
-        ↓
-Creación de vértices del grafo
-        ↓
-Conexión de vértices consecutivos mediante aristas
-        ↓
-Asignación de pesos según distancia
-        ↓
-Aplicación de Dijkstra para calcular rutas
+mapa.c
+input.txt
+input2.txt
+input3.txt
+InformeDiscreta.pdf
+README.md
 ```
 
-El programa no construye el grafo a partir de una figura cerrada o de un cuadrado. En cambio, interpreta cada calle como una línea definida por coordenadas. Los extremos de esas líneas se transforman en vértices y, cuando dos calles se cruzan, la intersección también se incorpora como un vértice compartido.
-
-Luego, los vértices ubicados sobre una misma calle se ordenan y se conectan solo si son consecutivos dentro del segmento. De esta forma, el grafo conserva la estructura real del mapa.
-
----
-
-## Funcionamiento del programa
-
-El archivo principal del proyecto es `mapa.c`.
-
-El funcionamiento general se organiza en las siguientes etapas:
-
-### 1. Lectura del archivo
-
-El programa solicita al usuario el nombre de un archivo de texto. Este archivo contiene las calles del mapa y los puntos turísticos que se deben visitar.
-
-### 2. Representación geométrica
-
-Cada calle se interpreta como un segmento dentro de un plano cartesiano, usando sus coordenadas iniciales y finales.
-
-### 3. Creación de vértices
-
-El programa crea vértices en:
-
-- Los extremos de cada calle.
-- Las intersecciones entre calles.
-- Los puntos turísticos definidos en el archivo.
-
-### 4. Construcción del grafo
-
-Los vértices ubicados sobre una misma calle se ordenan según su posición dentro del segmento. Luego se conectan únicamente los vértices consecutivos.
-
-Por ejemplo, si sobre una calle existen estos puntos:
-
-```text
-(0,50), (300,50), (650,50), (900,50), (1200,50)
-```
-
-El programa crea las siguientes conexiones:
-
-```text
-(0,50)    ↔ (300,50)
-(300,50)  ↔ (650,50)
-(650,50)  ↔ (900,50)
-(900,50)  ↔ (1200,50)
-```
-
-Cada conexión corresponde a una arista del grafo, y su peso corresponde a la distancia entre ambos vértices.
-
-### 5. Cálculo de rutas
-
-Para calcular el camino entre puntos turísticos, el programa utiliza el algoritmo de **Dijkstra**. Como todas las aristas tienen pesos positivos, este algoritmo permite encontrar caminos de menor distancia entre un punto de origen y un punto de destino.
-
-### 6. Marcado de puntos turísticos visitados
-
-El recorrido comienza desde el primer punto turístico indicado en el archivo. Luego avanza hacia los siguientes puntos no visitados. Si durante una ruta el programa pasa por otro punto turístico pendiente, este se marca automáticamente como visitado.
-
----
-
-## Estructura del proyecto
-
-La entrega contiene la versión oficial del programa, archivos de entrada de referencia, el informe y una versión gráfica experimental.
-
-```text
-Tarea_Grafos_Grupo_Fernandez_Dominguez_Grandon/
-│
-├── mapa.c
-├── input.txt
-├── input2.txt
-├── input3.txt
-├── InformeDiscreta.pdf
-├── README.md
-│
-└── version_grafica/
-    ├── versiongrafica.c
-    ├── versiongrafica2.c
-    └── README2.md
-```
-
-### Descripción de archivos
-
-| Archivo | Descripción |
-|---|---|
-| `mapa.c` | Código fuente principal de la versión oficial por consola. |
-| `input.txt` | Archivo de entrada de prueba. |
-| `input2.txt` | Segundo archivo de entrada de prueba. |
-| `input3.txt` | Tercer archivo de entrada de prueba. |
-| `InformeDiscreta.pdf` | Informe del proyecto. |
-| `README.md` | Documentación principal del proyecto. |
-| `version_grafica/` | Carpeta con una versión gráfica experimental y complementaria. |
-
----
+Además, se incluye una carpeta con una versión gráfica experimental desarrollada como complemento del proyecto.
 
 ## Requisitos
 
-Para compilar y ejecutar la versión oficial se requiere:
+Para compilar la versión oficial se requiere:
 
 - Sistema operativo Linux o entorno compatible.
 - Compilador `gcc`.
 - Librería matemática estándar de C.
 
-El programa utiliza funciones de `<math.h>`, por lo que se debe enlazar la librería matemática con la bandera `-lm`.
-
----
-
 ## Compilación
 
-Ubicarse en la carpeta donde se encuentra `mapa.c` y ejecutar:
+Desde la carpeta donde se encuentra `mapa.c`, ejecutar:
 
 ```bash
 gcc mapa.c -o mapa -lm
 ```
 
-También se puede compilar mostrando advertencias del compilador:
+También puede compilarse mostrando advertencias:
 
 ```bash
 gcc -Wall -Wextra -std=c11 mapa.c -o mapa -lm
 ```
 
----
-
 ## Ejecución
 
-Una vez compilado, ejecutar:
+Después de compilar, ejecutar:
 
 ```bash
 ./mapa
 ```
 
-El programa solicitará el nombre del archivo de entrada:
+El programa solicitará el nombre del archivo de entrada. Por ejemplo:
 
 ```text
-Ingrese el nombre del archivo de texto a leer:
+input.txt
 ```
 
-Por ejemplo:
+También pueden usarse los otros archivos de prueba incluidos:
 
 ```text
+input2.txt
 input3.txt
 ```
 
-Si el archivo es válido, el programa leerá las calles, construirá el grafo y mostrará por consola la ruta calculada.
+## Formato general del archivo de entrada
 
----
-
-## Formato del archivo de entrada
-
-El archivo de entrada debe tener la siguiente estructura:
+El archivo debe indicar primero las calles y luego los puntos turísticos:
 
 ```text
 N
 Nombre_calle x1 y1 x2 y2 Eje
-Nombre_calle x1 y1 x2 y2 Eje
 ...
 M
-Nombre_punto Nombre_calle posicion
 Nombre_punto Nombre_calle posicion
 ...
 ```
 
-Donde:
-
-| Elemento | Descripción |
-|---|---|
-| `N` | Cantidad de calles. |
-| `Nombre_calle` | Nombre de la calle. No debe contener espacios. |
-| `x1 y1` | Coordenadas iniciales de la calle. |
-| `x2 y2` | Coordenadas finales de la calle. |
-| `Eje` | Puede ser `X` o `Y`. Indica cómo se interpreta la posición de los puntos turísticos. |
-| `M` | Cantidad de puntos turísticos. |
-| `Nombre_punto` | Nombre del punto turístico. No debe contener espacios. |
-| `Nombre_calle` | Calle donde se ubica el punto turístico. |
-| `posicion` | Posición del punto turístico sobre la calle, según el eje de numeración. |
-
----
+Donde `N` corresponde a la cantidad de calles y `M` a la cantidad de puntos turísticos.  
+El eje puede ser `X` o `Y`, según cómo se ubica el punto turístico sobre la calle.
 
 ## Ejemplo de entrada
 
@@ -251,107 +99,31 @@ Museo Los_Carrera 300
 Plaza Freire 900
 ```
 
-En este ejemplo:
-
-- `Los_Carrera` es una calle horizontal desde `(0,50)` hasta `(1200,50)`.
-- `Freire` es una calle horizontal desde `(0,200)` hasta `(1200,200)`.
-- `Janequeo` es una calle vertical desde `(650,0)` hasta `(650,800)`.
-- `Tucapel` es una calle vertical desde `(900,0)` hasta `(900,800)`.
-- `Museo` se ubica sobre `Los_Carrera` en la posición `300`, equivalente a la coordenada `(300,50)`.
-- `Plaza` se ubica sobre `Freire` en la posición `900`, equivalente a la coordenada `(900,200)`.
-
----
-
-## Principales funciones
-
-| Función | Descripción |
-|---|---|
-| `leer_archivo()` | Lee las calles y puntos turísticos desde el archivo de entrada. |
-| `agregar_nodo()` | Agrega un nodo al grafo evitando duplicar coordenadas ya existentes. |
-| `interseccion_segmentos()` | Determina si dos calles se intersectan y calcula el punto de cruce. |
-| `construir_grafo()` | Genera los vértices, detecta intersecciones, ordena puntos sobre cada calle y crea las aristas. |
-| `dijkstra()` | Calcula el camino de menor distancia entre dos nodos del grafo. |
-| `calcular_y_mostrar_ruta()` | Controla el recorrido completo entre puntos turísticos y muestra las instrucciones por consola. |
-| `limpiar_adyacencia()` | Libera la memoria dinámica utilizada por las listas de adyacencia. |
-
----
-
 ## Versión gráfica experimental
 
-Además de la versión oficial por consola, se incluye una versión gráfica experimental como complemento del proyecto.
+La versión oficial del proyecto es `mapa.c`, ejecutada por consola.
 
-Esta versión permite explorar visualmente el mapa y probar una estrategia alternativa de optimización del recorrido. No corresponde al entregable principal solicitado por la pauta, sino a un desarrollo adicional realizado para ampliar el trabajo.
+También se incluye una versión gráfica experimental como complemento. Esta versión utiliza dependencias de Windows, por lo que no está pensada para compilarse directamente en Linux.
 
-La versión gráfica depende de librerías específicas de Windows, por lo que no está pensada para compilarse directamente en Linux.
-
-Para compilar en Windows con MinGW:
+Para compilarla en Windows con MinGW:
 
 ```cmd
 gcc versiongrafica.c -o versiongrafica.exe -lgdi32 -luser32 -lm
 ```
 
-Para la segunda versión gráfica:
+o:
 
 ```cmd
 gcc versiongrafica2.c -o versiongrafica2.exe -lgdi32 -luser32 -lm
 ```
 
----
-
-## Limitaciones
-
-La versión principal del programa calcula rutas siguiendo un criterio secuencial. Esto significa que parte desde el primer punto turístico indicado en el archivo y avanza hacia los siguientes puntos no visitados.
-
-Por esta razón, el programa no necesariamente encuentra el recorrido global más corto que visite todos los puntos turísticos. Su objetivo principal es construir correctamente el grafo ponderado y aplicar Dijkstra para obtener caminos de menor distancia entre puntos turísticos.
-
-Otras consideraciones:
+## Consideraciones
 
 - Los nombres de calles y puntos turísticos no deben contener espacios.
-- El eje de numeración debe ser `X` o `Y`.
 - Cada punto turístico debe estar asociado a una calle existente.
-- Las distancias se calculan usando geometría euclidiana.
-- La versión oficial está orientada a ejecución por consola.
-- La versión gráfica es experimental y no reemplaza la versión principal.
-
----
-
-## Posibles mejoras
-
-Algunas mejoras futuras para el proyecto son:
-
-- Incorporar una validación más detallada de puntos turísticos fuera del rango de una calle.
-- Exportar la ruta final a un archivo de texto.
-- Incorporar una visualización gráfica multiplataforma.
-- Mostrar estadísticas más detalladas del recorrido.
-- Optimizar globalmente el orden de visita de los puntos turísticos.
-- Agregar soporte para nombres de calles con espacios.
-
----
-
-## Repositorio
-
-El proyecto se encuentra disponible en el siguiente repositorio:
-
-[https://github.com/fel-os19/md](https://github.com/fel-os19/md)
-
----
-
-## Autores
-
-- Rodrigo Domínguez Larenas
-- Ariel Fernández Fuentealba
-- Felipe Grandón Contreras
-
----
+- La versión oficial calcula rutas mediante Dijkstra.
+- El informe contiene la explicación completa del modelo, la implementación y las conclusiones.
 
 ## Profesora
 
 Lilian Angélica Salinas Ayala
-
----
-
-## Asignatura
-
-**Matemáticas Discretas**  
-**Ingeniería Civil Informática**  
-**Universidad de Concepción**
